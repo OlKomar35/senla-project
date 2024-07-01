@@ -1,0 +1,14 @@
+### GET guests
+GET {{host}}/guests
+
+### GET guest with id=3
+GET {{host}}/guests/3
+
+### POST guest
+POST {{host}}/guests
+Content-Type: application/json
+
+{
+"id":null,
+"person_id":3,
+}

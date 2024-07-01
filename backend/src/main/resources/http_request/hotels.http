@@ -1,0 +1,11 @@
+### GET hotels
+GET {{host}}/hotels
+
+### GET hotel full with id=3
+GET {{host}}/hotels/all/3
+
+### GET hotel short with id=3
+GET {{host}}/hotels/short/3
+
+### GET hotel by city='Могилев'
+GET {{host}}/hotels/city/Могилев

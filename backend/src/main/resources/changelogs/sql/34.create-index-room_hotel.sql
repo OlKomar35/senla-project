@@ -1,0 +1,1 @@
+create index idx_room_hotel on rooms(hotel_id);

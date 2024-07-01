@@ -1,0 +1,6 @@
+### GET addresses
+GET {{host}}/addresses
+
+### GET address with id=3
+GET {{host}}/addresses/3
+

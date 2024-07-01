@@ -1,0 +1,1 @@
+create index idx_employee_person on employees(person_id);

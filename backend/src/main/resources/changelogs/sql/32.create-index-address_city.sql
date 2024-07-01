@@ -1,0 +1,1 @@
+create index idx_address_city_id on addresses(city_id);

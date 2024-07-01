@@ -10,10 +10,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // ** Validation **
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
 }
 
 test {
     useJUnitPlatform()
+}
+
+bootJar {
+    enabled = false
 }

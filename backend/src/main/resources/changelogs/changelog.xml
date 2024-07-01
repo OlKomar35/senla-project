@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<databaseChangeLog
+   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd"
+      logicalFilePath="homework-2">
+
+    <changeSet id="homework-2-cities" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/01.create-cities-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-streets" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/02.create-streets-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-addresses" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/03.create-addresses-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-attractions" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/04.create-attractions-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-amenities_h" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/05.create-amenities_h-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-facilities" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/06.create-facilities-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-types_hotel" author="Olga Komar">
+        <sqlFile encoding="utf8" path="sql/07.create-types_hotel-enum.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-hotels" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/08.create-hotels-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-hotel_amenities" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/09.create-hotel_amenities-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-roles" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/10.create-roles-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-people" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/11.create-people-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-guests" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/12.create-guests-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-booking_statuses" author="Olga Komar">
+        <sqlFile encoding="utf8" path="sql/13.create-booking_statuses-enum.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-types_room" author="Olga Komar">
+        <sqlFile encoding="utf8" path="sql/14.create-types_room-enum.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-rooms" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/15.create-rooms-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-amenities_r" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/16.create-amenities_r-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-room_amenities" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/17.create-room_amenities-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-payment_statuses" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/18.create-payment_statuses-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-bookings" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/19.create-bookings-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-booking_facilities" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/20.create-booking_facilities-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-job_titles" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/21.create-job_titles-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-employees" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/22.create-employees-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-employees_role" author="Olga Komar">
+        <sqlFile encoding="utf8" path="sql/23.create-people_role-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-hotel_employees" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/24.create-hotel_employees-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-services_provided" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/25.create-services_provided-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-feedback" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/26.create-feedback-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-hotel_feedback" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/27.create-hotel_feedback-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-guest_feedback" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/28.create-guest_feedback-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-types_payment" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/30.create-types_payment-enum.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-add-column-bookings" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/31.add-column-bookings-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-address_city" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/32.create-index-address_city.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-hotel_address" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/33.create-index-hotel_address.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-room_hotel" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/34.create-index-room_hotel.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-guest_person" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/35.create-index-guest_person.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-employee_person" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/36.create-index-employee_person.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-booking_guest" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/37.create-index-booking_guest.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-booking_in_date" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/38.create-index-booking_in_date.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-index-booking_out_date" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/39.create-index-booking_out_date.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-7-insert-cities" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/51.insert-cities-and-streets.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-insert-addresses" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/40.create-insert-addresses.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-6-insert-people" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/41.insert-people.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-6-insert-hotels" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/43.insert-hotels.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+    <changeSet id="homework-8-create-permissions-table" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/42.create-permissions-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-create-role_permissions-table" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/44.create-role_permissions-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-insert-roles-and-permissions" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/45.insert-roles-and-permissions.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-insert-role-permissions" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/46.insert-role-permissions.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-6-insert-guest" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/49.insert-guest.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-6-insert-feedback" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/50.insert-feedback.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-6-insert-hotels-feedback" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/52.insert-hotels-feedback.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-insert-attractions" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/47.insert-attractions.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-insert-employee" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/48.insert-employee.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-insert-people-roles" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/52.insert-people-roles.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-create-types_food-enum" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/53.create-types_food-enum.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-add-column-bookings-table" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/54.add-column-bookings-table.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="homework-8-insert-booking" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/55.insert-booking.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+</databaseChangeLog>

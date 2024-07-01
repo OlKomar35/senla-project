@@ -1,0 +1,1 @@
+create index idx_hotel_address on hotels(address_id);

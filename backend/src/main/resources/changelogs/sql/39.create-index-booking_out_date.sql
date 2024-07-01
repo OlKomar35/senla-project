@@ -1,0 +1,1 @@
+create index idx_booking_out_date on bookings(check_out_date);
