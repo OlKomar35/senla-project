@@ -92,7 +92,7 @@ public class BookingServiceImpl implements BookingService {
 
         if (!auth.getName().equals(bookingDto.getGuest().getPerson().getLogin()) && roles.contains("ROLE_USER")) {
             return new ResponseEntity<>(
-                    new AuthException(HttpStatus.BAD_REQUEST.value(), "Нельзя просмотреть чужие бронирования"),
+                    new AuthException(HttpStatus.BAD_REQUEST, "Нельзя просмотреть чужие бронирования"),
                     HttpStatus.BAD_REQUEST);
         }
 

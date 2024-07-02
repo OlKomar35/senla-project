@@ -61,7 +61,7 @@ public class  BookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookingById(@AuthenticationPrincipal AuthPersonDto authPersonDto,
+    public BookingDtoFullInfo getBookingById(@AuthenticationPrincipal AuthPersonDto authPersonDto,
                                             @PathVariable("id") @Positive @Min(1) Long id) {
         return bookingService.getBookingById(authPersonDto, id);
     }

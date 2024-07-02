@@ -10,7 +10,7 @@ import java.util.List;
 public interface BookingService {
     void createBooking(BookingDtoFullInfo booking);
 
-    ResponseEntity<?> getBookingById(AuthPersonDto personDto, Long id);
+    BookingDtoFullInfo getBookingById(AuthPersonDto personDto, Long id);
 
     List<BookingDtoFullInfo> getAllBooking(Integer limit, Integer page);
 
