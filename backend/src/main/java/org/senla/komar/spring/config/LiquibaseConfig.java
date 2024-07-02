@@ -16,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
  */
 
 @Configuration
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yaml")
 @ComponentScan(basePackages = "org.senla.komar.spring")
 public class LiquibaseConfig {
 

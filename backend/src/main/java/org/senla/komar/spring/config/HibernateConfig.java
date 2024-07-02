@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "org.senla.komar.spring")
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yaml")
 @RequiredArgsConstructor
 public class HibernateConfig {
 

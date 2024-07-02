@@ -11,7 +11,7 @@ import org.springframework.context.annotation.*;
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan(basePackages = "org.senla.komar.spring")
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yaml")
 public class ApplicationConfig  {
 
     /**
