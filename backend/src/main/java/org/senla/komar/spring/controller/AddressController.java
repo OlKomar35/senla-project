@@ -49,13 +49,11 @@ public class AddressController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Обработчик GET-запроса для получения списка всех адресов")
-    public List<AddressDto> viewAllAddresses(@RequestParam(value = "limit", defaultValue = "5")
-                                             @Positive
+    public List<AddressDto> viewAllAddresses(@RequestParam(value = "limit", defaultValue = "3")
                                              @Min(1)
                                              @Max(50)
                                              Integer limit,
                                              @RequestParam(value = "page", defaultValue = "1")
-                                             @Positive
                                              @Min(1)
                                              Integer page) {
         log.info("Получение списка всех адресов с лимитом {} и номером страницы {}", limit, page);
@@ -85,7 +83,7 @@ public class AddressController {
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Обработчик GET-запроса для получения адреса по его идентификатору")
-    public AddressDto getAddressById(@PathVariable("id") @Positive @Min(1) Long id) {
+    public AddressDto getAddressById(@PathVariable("id")  @Min(1) Long id) {
         log.info("Получение адреса по идентификатору: {}", id);
         return addressService.getAddressById(id);
     }
@@ -99,7 +97,7 @@ public class AddressController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('HOTEL_INFORMATION')")
     @Operation(description = "Обработчик DELETE-запроса для удаления адреса по его идентификатору")
-    public void deleteAddressById(@PathVariable("id") @Positive @Min(1) Long id) {
+    public void deleteAddressById(@PathVariable("id")  @Min(1) Long id) {
         log.info("Удаление адреса по идентификатору: {}", id);
         addressService.deleteById(id);
     }
@@ -115,7 +113,7 @@ public class AddressController {
     @PreAuthorize("hasAuthority('HOTEL_INFORMATION')")
     @Validated
     @Operation(description = "Обработчик PUT-запроса для обновления адреса по его идентификатору")
-    public void updateAddressById(@PathVariable("id") @Positive @Min(1) Long id,
+    public void updateAddressById(@PathVariable("id")  @Min(1) Long id,
                                   @Valid @RequestBody AddressDto newAddress) {
         log.info("Обновление адреса по идентификатору: {}, новые данные: {}", id, newAddress);
         addressService.updateById(id, newAddress);
@@ -148,12 +146,10 @@ public class AddressController {
     @Operation(description = "Обработчик GET-запроса для получения списка адресов по названию города")
     public List<AddressDto> getAddressesByCity(@PathVariable("name") @NotBlank @Size(min = 2, max = 25) String name,
                                                @RequestParam(value = "limit", defaultValue = "5")
-                                               @Positive
                                                @Min(1)
                                                @Max(50)
                                                Integer limit,
                                                @RequestParam(value = "page", defaultValue = "1")
-                                               @Positive
                                                @Min(1)
                                                Integer page) {
         log.info("Получение всех адресов в городе {}", name);
@@ -177,12 +173,10 @@ public class AddressController {
                                                         @RequestParam("street")
                                                         @NotBlank @Size(min = 2, max = 100) String streetName,
                                                         @RequestParam(value = "limit", defaultValue = "5")
-                                                        @Positive
                                                         @Min(1)
                                                         @Max(50)
                                                         Integer limit,
                                                         @RequestParam(value = "page", defaultValue = "1")
-                                                        @Positive
                                                         @Min(1)
                                                         Integer page) {
         log.info("Получение всех адресов в городе {} на улице {}", cityName, streetName);

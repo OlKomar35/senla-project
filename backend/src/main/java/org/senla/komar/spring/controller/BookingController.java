@@ -43,12 +43,10 @@ public class  BookingController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<BookingDtoFullInfo> viewAllBookings(@RequestParam(value = "limit", defaultValue = "5")
-                                                    @Positive
                                                     @Min(1)
                                                     @Max(50)
                                                     Integer limit,
                                                     @RequestParam(value = "page", defaultValue = "1")
-                                                    @Positive
                                                     @Min(1)
                                                     Integer page) {
         return bookingService.getAllBooking(limit, page);
@@ -62,19 +60,19 @@ public class  BookingController {
 
     @GetMapping("/{id}")
     public BookingDtoFullInfo getBookingById(@AuthenticationPrincipal AuthPersonDto authPersonDto,
-                                            @PathVariable("id") @Positive @Min(1) Long id) {
+                                            @PathVariable("id") @Min(1) Long id) {
         return bookingService.getBookingById(authPersonDto, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBookingById(@PathVariable("id") @Positive @Min(1) Long id) {
+    public void deleteBookingById(@PathVariable("id") @Min(1) Long id) {
         bookingService.deleteById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateBookingById(@PathVariable("id") @Positive @Min(1) Long id,
+    public void updateBookingById(@PathVariable("id") @Min(1) Long id,
                                   @Valid @RequestBody BookingDtoFullInfo newBooking) {
         bookingService.updateById(id, newBooking);
     }
@@ -84,12 +82,10 @@ public class  BookingController {
     public List<BookingDtoFullInfo> viewAllBookingsByDateIn(@RequestParam("date")
                                                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                                                             @RequestParam(value = "limit", defaultValue = "5")
-                                                            @Positive
                                                             @Min(1)
                                                             @Max(50)
                                                             Integer limit,
                                                             @RequestParam(value = "page", defaultValue = "1")
-                                                            @Positive
                                                             @Min(1)
                                                             Integer page) {
         return bookingService.getAllBookingsByDateIn(date, limit, page);
@@ -100,12 +96,10 @@ public class  BookingController {
     public List<BookingDtoFullInfo> viewAllBookingsByDateOut(@PathVariable("date")
                                                              @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                                                              @RequestParam(value = "limit", defaultValue = "5")
-                                                             @Positive
                                                              @Min(1)
                                                              @Max(50)
                                                              Integer limit,
                                                              @RequestParam(value = "page", defaultValue = "1")
-                                                             @Positive
                                                              @Min(1)
                                                              Integer page) {
         return bookingService.getAllBookingsByDateOut(date, limit, page);
@@ -117,12 +111,10 @@ public class  BookingController {
     public List<BookingDtoFullInfo> getAllBookingsByStatus(@RequestParam(value = "status", defaultValue = "NEW")
                                                            @NotNull BookingStatus status,
                                                            @RequestParam(value = "limit", defaultValue = "5")
-                                                           @Positive
                                                            @Min(1)
                                                            @Max(50)
                                                            Integer limit,
                                                            @RequestParam(value = "page", defaultValue = "1")
-                                                           @Positive
                                                            @Min(1)
                                                            Integer page) {
 
@@ -131,7 +123,7 @@ public class  BookingController {
 
     @GetMapping("/facilities/{id}")
     public ResponseEntity<?> getAllFacilityByBookingId(@AuthenticationPrincipal AuthPersonDto authPersonDto,
-                                                       @PathVariable("id") @Positive @Min(1) Long id) {
+                                                       @PathVariable("id")  @Min(1) Long id) {
         return bookingService.getAllFacilityByBookingId(authPersonDto, id);
     }
 

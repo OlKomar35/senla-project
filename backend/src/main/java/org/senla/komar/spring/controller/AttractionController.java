@@ -96,30 +96,6 @@ public class AttractionController {
         attractionService.updateById(id, newAttraction);
     }
 
-    /**
-     * Обработчик GET-запроса для получения списка достопримечательностей, близких к отелю.
-     *
-     * @param hotel объект HotelDtoShortInfo с информацией об отеле
-     * @param limit ограничение на количество возвращаемых достопримечательностей (по умолчанию 5)
-     * @param page  номер страницы результатов (по умолчанию 1)
-     * @return список объектов AttractionDto, содержащих информацию о достопримечательностях
-     */
-    @GetMapping("/hotel")
-    @ResponseStatus(HttpStatus.OK)
-    public List<AttractionDto> getAttractionsNearHotels(@Valid @RequestBody HotelDtoShortInfo hotel,
-                                                        @RequestParam(value = "limit", defaultValue = "5")
-                                                        @Positive
-                                                        @Min(1)
-                                                        @Max(50)
-                                                        Integer limit,
-                                                        @RequestParam(value = "page", defaultValue = "1")
-                                                        @Positive
-                                                        @Min(1)
-                                                        Integer page
-    ) {
-        log.info("Получение достопримечательностей вблизи гостиницы: {}" , hotel.getName());
-        return attractionService.getAttractionsNearHotel(hotel, limit, page);
-    }
 
     /**
      * Обработчик GET-запроса для получения списка достопримечательностей в конкретном городе.

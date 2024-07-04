@@ -7,8 +7,11 @@ import lombok.extern.log4j.Log4j2;
 import org.senla.komar.spring.dto.AddressDto;
 import org.senla.komar.spring.exception.AddressNotFoundException;
 import org.senla.komar.spring.mapper.AddressMapper;
-import org.senla.komar.spring.repository.AddressDao;
+import org.senla.komar.spring.repository.AddressRepository;
 import org.senla.komar.spring.service.AddressService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,27 +21,26 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
-    private final AddressDao addressDAO;
+    private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 
     @Override
     public void createAddress(AddressDto addressDto) {
-        addressDAO.create(addressMapper.toAddress(addressDto));
+        addressRepository.save(addressMapper.toAddress(addressDto));
     }
 
     @Override
     public AddressDto getAddressById(Long id) {
-        AddressDto address = addressMapper.toDto(addressDAO.readById(id));
-        if (address == null) {
-            throw new AddressNotFoundException("Не нашлось адреса с id=" + id);
-        }
-        return address;
+        return addressRepository.findById(id)
+            .map(addressMapper::toDto)
+            .orElseThrow(() -> new AddressNotFoundException("Не нашлось адреса с id=" + id));
     }
 
     @Override
     public List<AddressDto> getAllAddress(Integer limit,
                                           Integer page) {
-        List<AddressDto> addresses = addressDAO.getAll(limit, page).stream()
+        Pageable pageable = PageRequest.of(page-1, limit);
+        List<AddressDto> addresses = addressRepository.findAll(pageable).stream()
                 .map(addressMapper::toDto)
                 .collect(Collectors.toList());
 
@@ -52,7 +54,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void deleteById(Long id) {
-        addressDAO.deleteById(id);
+        addressRepository.deleteById(id);
         log.info("Удаление прошло успешно");
     }
 
@@ -60,13 +62,13 @@ public class AddressServiceImpl implements AddressService {
     public void updateById(Long id,
                            AddressDto newAddress) {
         newAddress.setId(id);
-        addressDAO.update(id,addressMapper.toAddress(newAddress));
+        addressRepository.save(addressMapper.toAddress(newAddress));
         log.info("Обновление прошло успешно");
     }
 
     @Override
     public int getHouseNumberByAddressId(Long id) {
-        Integer houseNumber = addressDAO.getHouseNumberByAddressId(id);
+        Integer houseNumber = addressRepository.getHouseNumberByAddressId(id);
         if (houseNumber == null) {
             log.debug("Номер дома не был найден");
         } else {
@@ -79,7 +81,8 @@ public class AddressServiceImpl implements AddressService {
     public List<AddressDto> getByCityName(String cityName,
                                           Integer limit,
                                           Integer page) {
-        List<AddressDto> addresses = addressDAO.getByCityName(cityName, limit, page)
+        Pageable pageable = PageRequest.of(page-1, limit, Sort.by("city"));
+        List<AddressDto> addresses = addressRepository.findAllByCityName(cityName,pageable)
                 .stream()
                 .map(addressMapper::toDto)
                 .toList();
@@ -97,8 +100,9 @@ public class AddressServiceImpl implements AddressService {
                                                String streetName,
                                                Integer limit,
                                                Integer page) {
-        List<AddressDto> addresses = addressDAO
-                .getByCityAndStreet(cityName, streetName, limit, page)
+        Pageable pageable = PageRequest.of(page-1, limit, Sort.by("city"));
+        List<AddressDto> addresses = addressRepository
+                .findAllByCityNameAndStreetName(cityName, streetName,pageable)
                 .stream()
                 .map(addressMapper::toDto)
                 .toList();

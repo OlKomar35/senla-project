@@ -31,7 +31,6 @@ public class BookingDtoFullInfo {
     @DecimalMin(value = "0.00", inclusive = true, message = "Значение должно быть не меньше 0")
     private BigDecimal cost;
 
-    @Positive
     @Min(1)
     private int countGuests;
 

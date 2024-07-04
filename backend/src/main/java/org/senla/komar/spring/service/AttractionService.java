@@ -16,8 +16,6 @@ public interface AttractionService {
 
     void updateById(Long id, AttractionDto newAttraction);
 
-    List<AttractionDto> getAttractionsNearHotel(HotelDtoShortInfo hotel, Integer limit, Integer page);
-
     List<AttractionDto> getAttractionsByCity(String nameCity, Integer limit, Integer page);
 
     List<AttractionDto> getAttractionsByCityAndStreet(String nameCity, String nameStreet, Integer limit, Integer page);

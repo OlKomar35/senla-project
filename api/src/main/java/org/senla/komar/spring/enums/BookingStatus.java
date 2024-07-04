@@ -16,9 +16,9 @@ public enum BookingStatus {
     NEW("new", " бронирование - только что созданное"),
     PENDING("pending", " бронирование - находится в обработке"),
     WAIT_LIST("wait list", "бронирование - в листе ожидания"),
-    CONFIRMED("confirmed", "бронирование - подтвержденно"),
-    CANCELLED("cancelled", " бронирование - отменнено"),
-    MODIFIED("modified", " бронирование - измененно"),
+    CONFIRMED("confirmed", "бронирование - подтверждено"),
+    CANCELLED("cancelled", " бронирование - отменено"),
+    MODIFIED("modified", " бронирование - изменено"),
     COMPLETED("completed", "бронирование - законченно");
 
     private final String name;

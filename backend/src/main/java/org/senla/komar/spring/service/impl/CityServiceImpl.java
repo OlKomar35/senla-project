@@ -2,10 +2,13 @@ package org.senla.komar.spring.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.CityDto;
+import org.senla.komar.spring.exception.AddressNotFoundException;
 import org.senla.komar.spring.exception.CityNotFoundException;
 import org.senla.komar.spring.mapper.CityMapper;
-import org.senla.komar.spring.repository.CityDao;
+import org.senla.komar.spring.repository.CityRepository;
 import org.senla.komar.spring.service.CityService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,45 +20,44 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
 
-    private final CityDao cityDAO;
+    private final CityRepository cityRepository;
     private final CityMapper cityMapper;
 
     @Override
     public void createCity(CityDto cityDto) {
-        cityDAO.create(cityMapper.toCity(cityDto));
+        cityRepository.save(cityMapper.toCity(cityDto));
     }
 
     @Override
     public CityDto getCityById(Long id) {
-        CityDto city = cityMapper.toDto(cityDAO.readById(id));
-        if (city == null) {
-            throw new CityNotFoundException("Не нашлось города с id=" + id);
-        }
-        return city;
+        return cityRepository.findById(id)
+            .map(cityMapper::toDto)
+            .orElseThrow(() -> new CityNotFoundException("Не нашлось города с id=" + id));
     }
 
     @Override
     public List<CityDto> getAllCities() {
-        return cityDAO.getAll().stream()
+        return cityRepository.findAll().stream()
                 .map(cityMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<CityDto> getAllCities(Integer limit, Integer page) {
-        return cityDAO.getAll(limit,page).stream()
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        return cityRepository.findAll(pageable).stream()
                 .map(cityMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(Long id) {
-        cityDAO.deleteById(id);
+        cityRepository.deleteById(id);
     }
 
     @Override
     public void updateById(Long id, CityDto newCity) {
         newCity.setId(id);
-        cityDAO.update(id,cityMapper.toCity(newCity));
+        cityRepository.save(cityMapper.toCity(newCity));
     }
 }
