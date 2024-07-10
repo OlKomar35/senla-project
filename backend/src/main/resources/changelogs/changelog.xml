@@ -120,6 +120,10 @@
         <sqlFile encoding="utf8" path="./sql/28.create-guest_feedback-table.sql" relativeToChangelogFile="true" stripComments="true"/>
     </changeSet>
 
+    <changeSet id="homework-9-trigger-hotels-feedback" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/29.create-trigger-hotels-feedback.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
     <changeSet id="homework-2-types_payment" author="Olga Komar">
         <sqlFile encoding="utf8" path="./sql/30.create-types_payment-enum.sql" relativeToChangelogFile="true" stripComments="true"/>
     </changeSet>
