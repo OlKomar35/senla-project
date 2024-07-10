@@ -8,8 +8,9 @@ import org.senla.komar.spring.exception.HotelNotFoundException;
 import org.senla.komar.spring.mapper.FeedbackMapper;
 import org.senla.komar.spring.mapper.HotelFullInfoMapper;
 import org.senla.komar.spring.mapper.HotelShortInfoMapper;
-import org.senla.komar.spring.repository.HotelDao;
+import org.senla.komar.spring.repository.HotelRepository;
 import org.senla.komar.spring.service.HotelService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,28 +24,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class HotelServiceImpl implements HotelService {
 
-    private final HotelDao hotelDao;
+    private final HotelRepository hotelRepository;
     private final HotelShortInfoMapper hotelShortInfoMapper;
     private final HotelFullInfoMapper hotelFullInfoMapper;
     private final FeedbackMapper feedbackMapper;
 
     @Override
     public void createHotel(HotelDtoFullInfo hotel) {
-        hotelDao.create(hotelFullInfoMapper.toHotel(hotel));
+        hotelRepository.save(hotelFullInfoMapper.toHotel(hotel));
     }
 
     @Override
     public HotelDtoFullInfo getHotelById(Long id) {
-        HotelDtoFullInfo hotel = hotelFullInfoMapper.toDto(hotelDao.readById(id));
-        if (hotel == null) {
-            throw new HotelNotFoundException("Не удалось получить отель с id= [" + id + "]");
-        }
-        return hotel;
+        return hotelRepository.findById(id)
+            .map( hotelFullInfoMapper::toDto)
+            .orElseThrow(() ->  new HotelNotFoundException("Не удалось получить отель с id= [" + id + "]"));
+
     }
 
     @Override
     public List<HotelDtoFullInfo> getAllHotel() {
-        List<HotelDtoFullInfo> hotels = hotelDao.getAll()
+        List<HotelDtoFullInfo> hotels = hotelRepository.findAll()
                 .stream()
                 .map(hotelFullInfoMapper::toDto)
                 .collect(Collectors.toList());
@@ -56,12 +56,12 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void deleteById(Long id) {
-        hotelDao.deleteById(id);
+        hotelRepository.deleteById(id);
     }
 
     @Override
     public List<HotelDtoFullInfo> getHotelByCity(String cityName) {
-        List<HotelDtoFullInfo> hotels = hotelDao.getHotelsByCity(cityName)
+        List<HotelDtoFullInfo> hotels = hotelRepository.findAllByAddressCity(cityName, Pageable.unpaged())
                 .stream()
                 .map(hotelFullInfoMapper::toDto)
                 .collect(Collectors.toList());
@@ -74,29 +74,27 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public HotelDtoShortInfo getHotelShortInfoById(Long id) {
-        HotelDtoShortInfo hotel = hotelShortInfoMapper.toDto(hotelDao.readById(id));
-        if (hotel == null) {
-            throw new HotelNotFoundException("Не удалось получить отель с id= [" + id + "]");
-        }
-        return hotel;
+        return hotelRepository.findById(id)
+            .map( hotelShortInfoMapper::toDto)
+            .orElseThrow(()->  new HotelNotFoundException("Не удалось получить отель с id= [" + id + "]"));
     }
 
     @Override
     public void updateById(Long id, HotelDtoFullInfo newHotel) {
         newHotel.setId(id);
-        hotelDao.update(id,hotelFullInfoMapper.toHotel(newHotel));
+        hotelRepository.save(hotelFullInfoMapper.toHotel(newHotel));
     }
 
     @Override
     public List<FeedbackDto> getFeedbacksByHotelId(Long id) {
-        return hotelDao.getFeedbacksById(id)
+        return hotelRepository.getFeedbacksById(id)
                 .stream()
                 .map(feedbackMapper::toDto).toList();
     }
 
     @Override
     public String getRankById(Long id) {
-        BigDecimal averageScore = hotelDao.getRankById(id);
+        BigDecimal averageScore = hotelRepository.getRankById(id);
 
         DecimalFormat decimalFormat = new DecimalFormat("#.#");
         decimalFormat.setMaximumFractionDigits(1);

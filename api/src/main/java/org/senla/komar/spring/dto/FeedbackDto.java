@@ -15,9 +15,8 @@ public class FeedbackDto {
 
     private String description;
 
-    @Positive
     @NotNull(message = "Не поставлена оценка")
     @Min(0)
     @Max(10)
-    private BigDecimal score;
+    private Byte score;
 }

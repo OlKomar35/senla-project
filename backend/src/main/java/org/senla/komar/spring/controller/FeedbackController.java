@@ -35,12 +35,10 @@ public class FeedbackController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<FeedbackDto> viewAllFeedback(@RequestParam(value = "limit", defaultValue = "5")
-                                             @Positive
                                              @Min(1)
                                              @Max(50)
                                              Integer limit,
                                              @RequestParam(value = "page", defaultValue = "1")
-                                             @Positive
                                              @Min(1)
                                              Integer page) {
         return feedbackService.getAllFeedback(limit, page);

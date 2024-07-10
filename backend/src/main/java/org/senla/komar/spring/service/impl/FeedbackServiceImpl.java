@@ -6,7 +6,7 @@ import org.senla.komar.spring.dto.FeedbackDto;
 import org.senla.komar.spring.dto.GuestDto;
 import org.senla.komar.spring.dto.HotelDtoFullInfo;
 import org.senla.komar.spring.mapper.FeedbackMapper;
-import org.senla.komar.spring.repository.FeedbackDao;
+import org.senla.komar.spring.repository.FeedbackRepository;
 import org.senla.komar.spring.service.FeedbackService;
 import org.senla.komar.spring.service.GuestService;
 import org.senla.komar.spring.service.HotelService;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
 
-    private final FeedbackDao feedBackDAO;
+    private final FeedbackRepository feedbackRepository;
     private final FeedbackMapper feedbackMapper;
     private final HotelService hotelService;
     private final GuestService guestService;
@@ -30,7 +30,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public void createFeedback(FeedbackDto feedbackDto) {
-        feedBackDAO.create(feedbackMapper.toFeedback(feedbackDto));
+        feedbackRepository.save(feedbackMapper.toFeedback(feedbackDto));
     }
 
     @Override
@@ -39,7 +39,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         HotelDtoFullInfo hotel = hotelService.getHotelById(id);
         hotel.getFeedbacks().add(feedbackDto);
         hotelService.updateById(id, hotel);
-        feedBackDAO.recalculateHotelRank(id);
     }
 
     @Override
@@ -48,16 +47,15 @@ public class FeedbackServiceImpl implements FeedbackService {
         GuestDto guest = guestService.getGuestById(id);
         guest.getFeedbacks().add(feedbackDto);
         guestService.updateGuestById(id, guest);
-        feedBackDAO.recalculateGuestRank(id);
     }
     @Override
     public ResponseEntity<?> getFeedbackById(AuthPersonDto authPersonDto, Long id) {
-        return ResponseEntity.ok(feedbackMapper.toDto(feedBackDAO.readById(id)));
+        return ResponseEntity.ok(feedbackRepository.findById(id));
     }
 
     @Override
     public List<FeedbackDto> getAllFeedback(Integer limit, Integer page) {
-        return feedBackDAO.getAll()
+        return feedbackRepository.findAll()
                 .stream()
                 .map(feedbackMapper::toDto)
                 .collect(Collectors.toList());
@@ -65,13 +63,13 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public void deleteById(Long id) {
-        feedBackDAO.deleteById(id);
+        feedbackRepository.deleteById(id);
     }
 
     @Override
     public void updateById(Long id, FeedbackDto newFeedback) {
         newFeedback.setId(id);
-        feedBackDAO.update(id,feedbackMapper.toFeedback(newFeedback));
+        feedbackRepository.save(feedbackMapper.toFeedback(newFeedback));
     }
 
 

@@ -23,7 +23,7 @@ public class Feedback extends BaseEntity<Long>  {
     private String description;
 
     @Column(name = "score", nullable = false)
-    private BigDecimal score;
+    private Byte score;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
