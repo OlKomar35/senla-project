@@ -8,6 +8,10 @@ spring:
   liquibase:
     change-log: changelogs/changelog.xml
 
+  jpa:
+    show-sql: false
+
+
 server:
   port: 8088
   servlet:
@@ -17,5 +21,4 @@ jwt:
   token:
     secret: R988574e26654231S54512148eR24517969633V25e524SENLA
     expired: 600000
-
 

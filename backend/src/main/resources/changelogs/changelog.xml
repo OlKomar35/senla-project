@@ -230,4 +230,10 @@
     <changeSet id="homework-8-insert-booking" author="Olga Komar">
         <sqlFile encoding="utf8" path="./sql/55.insert-booking.sql" relativeToChangelogFile="true" stripComments="true"/>
     </changeSet>
+
+    <changeSet id="project-1-insert-amenities" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/56.insert-amenities.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
+
 </databaseChangeLog>

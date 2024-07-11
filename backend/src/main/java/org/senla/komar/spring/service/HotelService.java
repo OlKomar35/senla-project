@@ -4,6 +4,7 @@ import java.util.List;
 import org.senla.komar.spring.dto.FeedbackDto;
 import org.senla.komar.spring.dto.HotelDtoFullInfo;
 import org.senla.komar.spring.dto.HotelDtoShortInfo;
+import org.senla.komar.spring.entity.Hotel;
 
 public interface HotelService {
     void createHotel(HotelDtoFullInfo hotel);
@@ -23,4 +24,6 @@ public interface HotelService {
     List<FeedbackDto> getFeedbacksByHotelId(Long id);
 
     String getRankById(Long id);
+
+  List<HotelDtoFullInfo> getHotelsByAmenities(List<Integer> amenityHotelsId, Integer limit, Integer page);
 }

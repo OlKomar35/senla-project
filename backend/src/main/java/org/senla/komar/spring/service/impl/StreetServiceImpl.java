@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.StreetDto;
 import org.senla.komar.spring.exception.StreetNotFoundException;
 import org.senla.komar.spring.mapper.StreetMapper;
-import org.senla.komar.spring.repository.StreetDao;
+import org.senla.komar.spring.repository.StreetRepository;
 import org.senla.komar.spring.service.StreetService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,47 +19,38 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StreetServiceImpl implements StreetService {
 
-    private final StreetDao streetDAO;
-    private final StreetMapper streetMapper;
+  private final StreetRepository streetRepository;
+  private final StreetMapper streetMapper;
 
-    @Override
-    public void createStreet(StreetDto street) {
-        streetDAO.create(streetMapper.toStreet(street));
-    }
+  @Override
+  public void createStreet(StreetDto street) {
+    streetRepository.save(streetMapper.toStreet(street));
+  }
 
-    @Override
-    public StreetDto getStreetById(Long id) {
-        StreetDto street = streetMapper.toDto(streetDAO.readById(id));
-        if (street == null) {
-            throw new StreetNotFoundException("Не нашлось улицы с id=" + id);
-        }
-        return street;
-    }
+  @Override
+  public StreetDto getStreetById(Long id) {
+    return streetRepository.findById(id)
+        .map(streetMapper::toDto)
+        .orElseThrow(() -> new StreetNotFoundException("Не нашлось улицы с id=" + id));
+  }
 
-    @Override
-    public List<StreetDto> getAllStreets() {
-        return streetDAO.getAll()
-                .stream()
-                .map(streetMapper::toDto)
-                .collect(Collectors.toList());
-    }
+  @Override
+  public List<StreetDto> getAllStreets(Integer limit, Integer page) {
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    return streetRepository.findAll(pageable)
+        .stream()
+        .map(streetMapper::toDto)
+        .collect(Collectors.toList());
+  }
 
-    @Override
-    public List<StreetDto> getAllStreets(Integer limit, Integer page) {
-        return streetDAO.getAll(limit, page)
-                .stream()
-                .map(streetMapper::toDto)
-                .collect(Collectors.toList());
-    }
+  @Override
+  public void deleteStreetById(Long id) {
+    streetRepository.deleteById(id);
+  }
 
-    @Override
-    public void deleteStreetById(Long id) {
-        streetDAO.deleteById(id);
-    }
-
-    @Override
-    public void updateStreetById(Long id, StreetDto newStreet) {
-        newStreet.setId(id);
-        streetDAO.update(id,streetMapper.toStreet(newStreet));
-    }
+  @Override
+  public void updateStreetById(Long id, StreetDto newStreet) {
+    newStreet.setId(id);
+    streetRepository.save(streetMapper.toStreet(newStreet));
+  }
 }

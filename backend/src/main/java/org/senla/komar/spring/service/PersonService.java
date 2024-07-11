@@ -18,8 +18,6 @@ public interface PersonService {
 
     PersonDto getPersonByPassportData(String passportSeries, int passportNumber);
 
-    PersonDto getPersonByPassportDataEntityGraph(String passportSeries, int passportNumber);
-
     PersonDto getPersonByEmail(String email);
 
     PersonDto getPersonByPhoneNumber(String phoneNumber);

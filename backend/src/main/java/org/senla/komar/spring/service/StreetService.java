@@ -12,8 +12,6 @@ public interface StreetService {
 
     StreetDto getStreetById(Long id);
 
-    List<StreetDto> getAllStreets();
-
     List<StreetDto> getAllStreets(Integer limit, Integer page);
 
     void deleteStreetById(Long id);

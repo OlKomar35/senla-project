@@ -1,7 +1,7 @@
 create table hotels (
     id bigserial primary key,
-    created_at timestamp,
-    updated_at timestamp,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
     hotel_name varchar(100) not null,
     address_id bigint references addresses(id),
     phone_number varchar(30) not null unique,

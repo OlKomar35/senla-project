@@ -1,7 +1,7 @@
 create table addresses(
 	id bigserial primary key,
-    created_at timestamp,
-    updated_at timestamp,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
 	city_id bigint references cities(id),
 	street_id bigint references streets(id),
 	house_number int,

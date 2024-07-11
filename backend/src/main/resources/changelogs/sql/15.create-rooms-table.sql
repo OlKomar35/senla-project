@@ -1,7 +1,7 @@
 create table rooms(
 	id bigserial primary key,
-    created_at timestamp,
-    updated_at timestamp,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
 	hotel_id bigint references hotels(id),
 	room_number int not null,
 	floor_room int not null,

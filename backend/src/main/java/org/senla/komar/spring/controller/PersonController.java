@@ -72,10 +72,9 @@ public class PersonController {
 
                                                                         @RequestParam(value ="passportNumber")
                                                                         @NotNull
-                                                                        @Positive
                                                                         @Min(1000000)
                                                                         @Max(9999999)
                                                                         int passportNumber) {
-        return ResponseEntity.ok(personServiceImpl.getPersonByPassportDataEntityGraph(passportSeries, passportNumber));
+        return ResponseEntity.ok(personServiceImpl.getPersonByPassportData(passportSeries, passportNumber));
     }
 }

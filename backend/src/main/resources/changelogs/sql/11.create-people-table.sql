@@ -1,7 +1,7 @@
 create table people(
 	id bigserial primary key,
-    created_at timestamp,
-    updated_at timestamp,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
 	surname varchar(35) not null,
 	firstname varchar(35) not null,
 	middlename varchar(35),

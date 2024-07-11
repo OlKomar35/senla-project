@@ -9,6 +9,12 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    springVersion = "3.3.1"
+    mapstructVersion = "1.5.5.Final"
+    jjwtVersion = "0.12.6"
+}
+
 dependencies {
     implementation project(':api')
 
@@ -17,29 +23,29 @@ dependencies {
     implementation 'org.liquibase:liquibase-core:4.28.0'
 
     // ** Data **
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.3.1'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}"
     annotationProcessor("org.hibernate.orm:hibernate-jpamodelgen:6.3.1.Final")
 
     // ** Validation **
-    implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.1'
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springVersion}"
 
     // ** Security **
-    implementation 'org.springframework.boot:spring-boot-starter-security:3.3.1'
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+    implementation "org.springframework.boot:spring-boot-starter-security:${springVersion}"
+    implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
 
     // ** Swagger **
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
     // ** Mapstruct **
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     //** Test **
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.1'
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springVersion}"
 
 }
 
