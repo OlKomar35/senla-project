@@ -8,15 +8,10 @@ spring:
   liquibase:
     change-log: changelogs/changelog.xml
 
-  server:
-    port: 8088
-    servlet:
-      context-path: /app/v1
-
-packages-to-scan: org.senla.komar.spring
-
-hibernate:
-  dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8088
+  servlet:
+    context-path: /app/v1
 
 jwt:
   token:

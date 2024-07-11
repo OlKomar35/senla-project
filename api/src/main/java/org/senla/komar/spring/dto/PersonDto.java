@@ -40,8 +40,6 @@ public class PersonDto {
 
     @NotNull(message = "Не введен номер паспорта")
     @Positive(message = "Не может иметь отрицательное значение")
-    @Min(1000000)
-    @Max(9999999)
     private int passportNumber;
 
 
