@@ -7,9 +7,17 @@ spring:
 
   liquibase:
     change-log: changelogs/changelog.xml
+    enabled: true
 
   jpa:
     show-sql: false
+
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092, localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
 
 
 server:

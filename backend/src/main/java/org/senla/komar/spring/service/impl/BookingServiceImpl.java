@@ -2,6 +2,7 @@ package org.senla.komar.spring.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -9,7 +10,9 @@ import org.senla.komar.spring.dto.AuthPersonDto;
 import org.senla.komar.spring.dto.BookingDtoFullInfo;
 import org.senla.komar.spring.entity.Booking;
 import org.senla.komar.spring.enums.BookingStatus;
-import org.senla.komar.spring.exception.AddressNotFoundException;
+import org.senla.komar.spring.enums.MessageType;
+import org.senla.komar.spring.enums.PaymentStatus;
+import org.senla.komar.spring.event.MessageSentEvent;
 import org.senla.komar.spring.exception.BookingNotFoundException;
 import org.senla.komar.spring.mapper.BookingFullInfoMapper;
 import org.senla.komar.spring.mapper.FacilityMapper;
@@ -21,6 +24,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,14 +41,18 @@ public class BookingServiceImpl implements BookingService {
   private final BookingRepository bookingRepository;
   private final BookingFullInfoMapper bookingFullInfoMapper;
   private final FacilityMapper facilityMapper;
+  private final KafkaTemplate<String,MessageSentEvent> kafkaTemplate;
 
   @Override
   public void createBooking(BookingDtoFullInfo booking) {
     bookingRepository.save(bookingFullInfoMapper.toBooking(booking));
+
   }
 
   @Override
   public BookingDtoFullInfo getBookingById(AuthPersonDto authPersonDto, Long id) {
+    Booking booking =  bookingRepository.findById(id).orElseThrow(() ->
+        new BookingNotFoundException("Не нашлось гостиницу с id=" + id));
     BookingDtoFullInfo bookingDto = bookingRepository.findById(id)
         .map(bookingFullInfoMapper::toDtoFull)
         .orElseThrow(() -> new BookingNotFoundException("Не нашлось гостиницу с id=" + id));
@@ -54,6 +63,27 @@ public class BookingServiceImpl implements BookingService {
 
     if (!auth.getName().equals(bookingDto.getGuest().getPerson().getLogin()) && roles.contains("ROLE_USER")) {
       throw new AuthException(HttpStatus.BAD_REQUEST, "Нельзя просмотреть чужие бронирования");
+    }
+    MessageSentEvent message = MessageSentEvent.builder()
+        .messageType(MessageType.EMAIL)
+        .bookingStatus(BookingStatus.NEW)
+        .guestSurname(booking.getGuest().getPerson().getSurname())
+        .guestFirstname(booking.getGuest().getPerson().getFirstname())
+        .guestEmail(booking.getGuest().getPerson().getEmail())
+        .hotelName("booking.getRoom().getHotel().getName()")
+        .hotelAddress("booking.getRoom().getHotel().getAddress().toString()")
+        .hotelPhoneNumber("booking.getRoom().getHotel().getPhoneNumber()")
+        .hotelEmail("booking.getRoom().getHotel().getEmail()")
+        .checkInDate(booking.getCheckInDate().toString())
+        .checkOutDate(booking.getCheckOutDate().toString())
+        .paymentStatus(booking.getPaymentStatus())
+        .typeFood(booking.getTypeFood())
+        .build();
+    try {
+      SendResult<String, MessageSentEvent> result = kafkaTemplate
+          .send("message-send-topic",message).get();
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
     }
 
     return bookingDto;

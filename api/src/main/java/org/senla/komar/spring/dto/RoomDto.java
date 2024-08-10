@@ -13,7 +13,7 @@ import org.senla.komar.spring.enums.TypeRoom;
 public class RoomDto {
     private Long id;
     @NotNull
-    private HotelDtoShortInfo hotel;
+    private HotelDtoFullInfo hotel;
 
     @NotNull
     @Min(1)
