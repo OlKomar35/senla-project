@@ -3,7 +3,7 @@ package org.senla.komar.spring.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.FacilityDto;
-import org.senla.komar.spring.exception.EmployeeNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.FacilityMapper;
 import org.senla.komar.spring.repository.FacilityRepository;
 import org.senla.komar.spring.service.FacilityService;
@@ -29,7 +29,7 @@ public class FacilityServiceImpl implements FacilityService {
   public FacilityDto getFacilityById(Integer id) {
     return facilityRepository.findById(id)
         .map(facilityMapper::toDto)
-        .orElseThrow(() -> new EmployeeNotFoundException("Не нашлось работника с id=" + id));
+        .orElseThrow(() -> new EntityNotFoundException("Не нашлось работника с id=" + id));
   }
 
   @Override

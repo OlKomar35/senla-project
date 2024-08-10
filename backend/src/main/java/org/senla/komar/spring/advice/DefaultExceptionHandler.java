@@ -39,8 +39,7 @@ public class DefaultExceptionHandler {
    * @return Ответ с сообщением об ошибке и статусом HTTP 404.
    */
 
-  @ExceptionHandler({HotelNotFoundException.class, PersonNotFoundException.class, AddressNotFoundException.class,
-      CityNotFoundException.class, StreetNotFoundException.class, PersonIllegalArgumentException.class,
+  @ExceptionHandler({EntityNotFoundException.class, PersonIllegalArgumentException.class,
       AddressIllegalArgumentException.class})
   public ResponseEntity<?> handlerException(RuntimeException exception) {
     log.debug(exception.getMessage(), exception);

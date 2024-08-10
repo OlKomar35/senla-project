@@ -2,7 +2,7 @@ package org.senla.komar.spring.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.StreetDto;
-import org.senla.komar.spring.exception.StreetNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.StreetMapper;
 import org.senla.komar.spring.repository.StreetRepository;
 import org.senla.komar.spring.service.StreetService;
@@ -31,7 +31,7 @@ public class StreetServiceImpl implements StreetService {
   public StreetDto getStreetById(Long id) {
     return streetRepository.findById(id)
         .map(streetMapper::toDto)
-        .orElseThrow(() -> new StreetNotFoundException("Не нашлось улицы с id=" + id));
+        .orElseThrow(() -> new EntityNotFoundException("Не нашлось улицы с id=" + id));
   }
 
   @Override

@@ -3,7 +3,7 @@ package org.senla.komar.spring.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.RoomDto;
-import org.senla.komar.spring.exception.RoomNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.RoomMapper;
 import org.senla.komar.spring.repository.RoomRepository;
 import org.senla.komar.spring.service.RoomService;
@@ -27,7 +27,7 @@ public class RoomServiceImpl implements RoomService {
   public RoomDto getRoomById(Long id) {
     return roomRepository.findById(id)
         .map(roomMapper::toDto)
-        .orElseThrow(() -> new RoomNotFoundException("Не найден номер с id = " + id));
+        .orElseThrow(() -> new EntityNotFoundException("Не найден номер с id = " + id));
   }
 
   @Override

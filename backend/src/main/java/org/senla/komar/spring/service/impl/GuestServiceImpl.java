@@ -3,8 +3,7 @@ package org.senla.komar.spring.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.FeedbackDto;
 import org.senla.komar.spring.dto.GuestDto;
-import org.senla.komar.spring.exception.EmployeeNotFoundException;
-import org.senla.komar.spring.exception.GuestNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.GuestMapper;
 import org.senla.komar.spring.repository.GuestRepository;
 import org.senla.komar.spring.service.GuestService;
@@ -32,7 +31,7 @@ public class GuestServiceImpl implements GuestService {
   public GuestDto getGuestById(Long id) {
     return guestRepository.findById(id)
         .map(guestMapper::toDto)
-        .orElseThrow(() -> new GuestNotFoundException("Не нашлость гостя с id= " + id));
+        .orElseThrow(() -> new EntityNotFoundException("Не нашлость гостя с id= " + id));
   }
 
   public List<GuestDto> getAll(Integer limit, Integer page) {
@@ -56,7 +55,7 @@ public class GuestServiceImpl implements GuestService {
   public GuestDto getGuestByPhoneNumber(String phoneNumber) {
     return guestRepository.findByPersonPhoneNumber(phoneNumber)
         .map(guestMapper::toDto)
-        .orElseThrow(() -> new GuestNotFoundException("Не нашлось гостя с номером телефона= " + phoneNumber));
+        .orElseThrow(() -> new EntityNotFoundException("Не нашлось гостя с номером телефона= " + phoneNumber));
   }
 
   @Override

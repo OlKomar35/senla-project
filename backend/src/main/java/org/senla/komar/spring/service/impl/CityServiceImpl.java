@@ -2,8 +2,7 @@ package org.senla.komar.spring.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.CityDto;
-import org.senla.komar.spring.exception.AddressNotFoundException;
-import org.senla.komar.spring.exception.CityNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.CityMapper;
 import org.senla.komar.spring.repository.CityRepository;
 import org.senla.komar.spring.service.CityService;
@@ -32,7 +31,7 @@ public class CityServiceImpl implements CityService {
     public CityDto getCityById(Long id) {
         return cityRepository.findById(id)
             .map(cityMapper::toDto)
-            .orElseThrow(() -> new CityNotFoundException("Не нашлось города с id=" + id));
+            .orElseThrow(() -> new EntityNotFoundException("Не нашлось города с id=" + id));
     }
 
     @Override

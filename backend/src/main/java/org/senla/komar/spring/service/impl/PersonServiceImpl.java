@@ -8,8 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.senla.komar.spring.dto.PermissionDto;
 import org.senla.komar.spring.dto.PersonDto;
 import org.senla.komar.spring.dto.RoleDto;
-import org.senla.komar.spring.entity.Person;
-import org.senla.komar.spring.exception.PersonNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.PersonMapper;
 import org.senla.komar.spring.repository.PersonRepository;
 import org.senla.komar.spring.service.PersonService;
@@ -40,7 +39,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     public PersonDto getPersonById(Long id) {
         return personRepository.findById(id)
             .map(personMapper::toDto)
-            .orElseThrow(() -> new PersonNotFoundException("Не нашелся человек с id= " + id));
+            .orElseThrow(() -> new EntityNotFoundException("Не нашелся человек с id= " + id));
     }
 
     public List<PersonDto> getAll(Integer limit, Integer page) {
@@ -52,7 +51,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
 
     public void deleteById(Long id) {
         if (!personRepository.isExistById(id)) {
-            throw new PersonNotFoundException("Ошибка при удалении! Не нашелся человек с id= " + id);
+            throw new EntityNotFoundException("Ошибка при удалении! Не нашелся человек с id= " + id);
         }
         personRepository.deleteById(id);
     }
@@ -66,35 +65,35 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     public PersonDto getPersonByPassportData(String passportSeries, int passportNumber) {
         return personRepository.findByPassportSeriesAndPassportNumber(passportSeries, passportNumber)
             .map(personMapper::toDto)
-            .orElseThrow(() ->new PersonNotFoundException("Не нашелся человек с паспортом= " + passportSeries + " " + passportNumber));
+            .orElseThrow(() ->new EntityNotFoundException("Не нашелся человек с паспортом= " + passportSeries + " " + passportNumber));
     }
 
     @Override
     public PersonDto getPersonByEmail(String email) {
         return personRepository.findByEmail(email)
             .map(personMapper::toDto)
-            .orElseThrow(() -> new PersonNotFoundException("Не нашелся человек с email= " + email));
+            .orElseThrow(() -> new EntityNotFoundException("Не нашелся человек с email= " + email));
     }
 
     @Override
     public PersonDto getPersonByPhoneNumber(String phoneNumber) {
         return personRepository.findByPhoneNumber(phoneNumber)
             .map(personMapper::toDto)
-            .orElseThrow(() ->  new PersonNotFoundException("Не нашелся человек с номером телефона= " + phoneNumber));
+            .orElseThrow(() ->  new EntityNotFoundException("Не нашелся человек с номером телефона= " + phoneNumber));
     }
 
     @Override
     public PersonDto getPersonByLogin(String login) {
      return personRepository.findByLogin(login)
          .map(personMapper::toDto)
-         .orElseThrow(()->new PersonNotFoundException("Не нашелся человек с логином= " + login));
+         .orElseThrow(()->new EntityNotFoundException("Не нашелся человек с логином= " + login));
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         PersonDto person = getPersonByLogin(username);
         if (person == null) {
-            throw new PersonNotFoundException(String.format("Пользователь с логином %s", username));
+            throw new EntityNotFoundException(String.format("Пользователь с логином %s", username));
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();

@@ -11,9 +11,8 @@ import org.senla.komar.spring.dto.BookingDtoFullInfo;
 import org.senla.komar.spring.entity.Booking;
 import org.senla.komar.spring.enums.BookingStatus;
 import org.senla.komar.spring.enums.MessageType;
-import org.senla.komar.spring.enums.PaymentStatus;
 import org.senla.komar.spring.event.MessageSentEvent;
-import org.senla.komar.spring.exception.BookingNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.BookingFullInfoMapper;
 import org.senla.komar.spring.mapper.FacilityMapper;
 import org.senla.komar.spring.repository.BookingRepository;
@@ -52,10 +51,10 @@ public class BookingServiceImpl implements BookingService {
   @Override
   public BookingDtoFullInfo getBookingById(AuthPersonDto authPersonDto, Long id) {
     Booking booking =  bookingRepository.findById(id).orElseThrow(() ->
-        new BookingNotFoundException("Не нашлось гостиницу с id=" + id));
+        new EntityNotFoundException("Не нашлось гостиницу с id=" + id));
     BookingDtoFullInfo bookingDto = bookingRepository.findById(id)
         .map(bookingFullInfoMapper::toDtoFull)
-        .orElseThrow(() -> new BookingNotFoundException("Не нашлось гостиницу с id=" + id));
+        .orElseThrow(() -> new EntityNotFoundException("Не нашлось гостиницу с id=" + id));
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     List<String> roles = auth.getAuthorities().stream()
         .map(GrantedAuthority::getAuthority)
@@ -128,7 +127,7 @@ public class BookingServiceImpl implements BookingService {
   public ResponseEntity<?> getAllFacilityByBookingId(AuthPersonDto personDto, Long id) {
     BookingDtoFullInfo bookingDto = bookingRepository.findById(id)
         .map(bookingFullInfoMapper::toDtoFull)
-        .orElseThrow(() -> new BookingNotFoundException("Не нашлось гостиницу с id=" + id));;
+        .orElseThrow(() -> new EntityNotFoundException("Не нашлось гостиницу с id=" + id));;
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     List<String> roles = auth.getAuthorities().stream()
         .map(GrantedAuthority::getAuthority)

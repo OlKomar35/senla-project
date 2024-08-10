@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.senla.komar.spring.dto.AddressDto;
-import org.senla.komar.spring.exception.AddressNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.AddressMapper;
 import org.senla.komar.spring.repository.AddressRepository;
 import org.senla.komar.spring.service.AddressService;
@@ -33,7 +33,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressDto getAddressById(Long id) {
         return addressRepository.findById(id)
             .map(addressMapper::toDto)
-            .orElseThrow(() -> new AddressNotFoundException("Не нашлось адреса с id=" + id));
+            .orElseThrow(() -> new EntityNotFoundException("Не нашлось адреса с id=" + id));
     }
 
     @Override

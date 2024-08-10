@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.FeedbackDto;
 import org.senla.komar.spring.dto.HotelDtoFullInfo;
 import org.senla.komar.spring.dto.HotelDtoShortInfo;
-import org.senla.komar.spring.exception.HotelNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.FeedbackMapper;
 import org.senla.komar.spring.mapper.HotelFullInfoMapper;
 import org.senla.komar.spring.mapper.HotelShortInfoMapper;
@@ -39,7 +39,7 @@ public class HotelServiceImpl implements HotelService {
   public HotelDtoFullInfo getHotelById(Long id) {
     return hotelRepository.findById(id)
         .map(hotelFullInfoMapper::toDto)
-        .orElseThrow(() -> new HotelNotFoundException("Не удалось получить отель с id= [" + id + "]"));
+        .orElseThrow(() -> new EntityNotFoundException("Не удалось получить отель с id= [" + id + "]"));
 
   }
 
@@ -51,7 +51,7 @@ public class HotelServiceImpl implements HotelService {
         .map(hotelFullInfoMapper::toDto)
         .collect(Collectors.toList());
     if (hotels.isEmpty()) {
-      throw new HotelNotFoundException("Не удалось получить ни одного отеля");
+      throw new EntityNotFoundException("Не удалось получить ни одного отеля");
     }
     return hotels;
   }
@@ -68,7 +68,7 @@ public class HotelServiceImpl implements HotelService {
         .map(hotelFullInfoMapper::toDto)
         .collect(Collectors.toList());
     if (hotels.isEmpty()) {
-      throw new HotelNotFoundException("Не удалось получить ни один отель в городе " + cityName);
+      throw new EntityNotFoundException("Не удалось получить ни один отель в городе " + cityName);
     }
     return hotels;
   }
@@ -78,7 +78,7 @@ public class HotelServiceImpl implements HotelService {
   public HotelDtoShortInfo getHotelShortInfoById(Long id) {
     return hotelRepository.findById(id)
         .map(hotelShortInfoMapper::toDto)
-        .orElseThrow(() -> new HotelNotFoundException("Не удалось получить отель с id= [" + id + "]"));
+        .orElseThrow(() -> new EntityNotFoundException("Не удалось получить отель с id= [" + id + "]"));
   }
 
   @Override

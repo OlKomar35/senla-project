@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.AttractionDto;
-import org.senla.komar.spring.exception.AttractionNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.AttractionMapper;
 import org.senla.komar.spring.mapper.HotelShortInfoMapper;
 import org.senla.komar.spring.repository.AttractionRepository;
@@ -32,7 +32,7 @@ public class AttractionServiceImpl implements AttractionService {
     public AttractionDto getAttractionById(Long id) {
         return attractionRepository.findById(id)
             .map(attractionMapper::toDto)
-            .orElseThrow(() -> new AttractionNotFoundException("Не нашлось достопримечательности с id=" + id));
+            .orElseThrow(() -> new EntityNotFoundException("Не нашлось достопримечательности с id=" + id));
     }
 
     @Override

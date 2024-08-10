@@ -3,8 +3,7 @@ package org.senla.komar.spring.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.senla.komar.spring.dto.EmployeeDto;
 import org.senla.komar.spring.enums.JobTitle;
-import org.senla.komar.spring.exception.AddressNotFoundException;
-import org.senla.komar.spring.exception.EmployeeNotFoundException;
+import org.senla.komar.spring.exception.EntityNotFoundException;
 import org.senla.komar.spring.mapper.EmployeeMapper;
 import org.senla.komar.spring.repository.EmployeeRepository;
 import org.senla.komar.spring.service.EmployeeService;
@@ -32,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeById(Long id) {
         return employeeRepository.findById(id)
             .map(employeeMapper::toDto)
-            .orElseThrow(() -> new EmployeeNotFoundException("Не нашлось работника с id=" + id));
+            .orElseThrow(() -> new EntityNotFoundException("Не нашлось работника с id=" + id));
     }
 
     @Override
@@ -60,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeByLogin(String login) {
         return employeeRepository.findByPersonLogin(login)
             .map(employeeMapper::toDto)
-            .orElseThrow(() -> new EmployeeNotFoundException("Не нашлось работника с login=" + login));
+            .orElseThrow(() -> new EntityNotFoundException("Не нашлось работника с login=" + login));
     }
 
     @Override
