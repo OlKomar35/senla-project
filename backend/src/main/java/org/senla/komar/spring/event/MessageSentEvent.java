@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.senla.komar.spring.enums.BookingStatus;
+import org.senla.komar.spring.enums.DeliveryChannel;
 import org.senla.komar.spring.enums.MessageType;
 import org.senla.komar.spring.enums.PaymentStatus;
 import org.senla.komar.spring.enums.TypeFood;
@@ -25,9 +26,9 @@ import org.senla.komar.spring.enums.TypePayment;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MessageSentEvent {
+public class MessageSentEvent { ;
   private MessageType messageType;
-  private BookingStatus bookingStatus;
+  private DeliveryChannel deliveryChannel;
   private String guestSurname;
   private String guestFirstname;
   private String guestEmail;

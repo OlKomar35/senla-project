@@ -10,6 +10,7 @@ import org.senla.komar.spring.dto.AuthPersonDto;
 import org.senla.komar.spring.dto.BookingDtoFullInfo;
 import org.senla.komar.spring.entity.Booking;
 import org.senla.komar.spring.enums.BookingStatus;
+import org.senla.komar.spring.enums.DeliveryChannel;
 import org.senla.komar.spring.enums.MessageType;
 import org.senla.komar.spring.event.MessageSentEvent;
 import org.senla.komar.spring.exception.EntityNotFoundException;
@@ -64,8 +65,8 @@ public class BookingServiceImpl implements BookingService {
       throw new AuthException(HttpStatus.BAD_REQUEST, "Нельзя просмотреть чужие бронирования");
     }
     MessageSentEvent message = MessageSentEvent.builder()
-        .messageType(MessageType.EMAIL)
-        .bookingStatus(BookingStatus.NEW)
+        .messageType(MessageType.NEW_BOOKING)
+        .deliveryChannel(DeliveryChannel.EMAIL)
         .guestSurname(booking.getGuest().getPerson().getSurname())
         .guestFirstname(booking.getGuest().getPerson().getFirstname())
         .guestEmail(booking.getGuest().getPerson().getEmail())

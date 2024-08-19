@@ -6,6 +6,5 @@ package org.senla.komar.spring.enums;
  * Created at 07.08.2024
  */
 public enum MessageType {
-  EMAIL,
-  SMS
+  NEW_BOOKING, CANCELLED_BOOKING, NEW
 }
