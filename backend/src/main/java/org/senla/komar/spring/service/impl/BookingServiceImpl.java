@@ -85,7 +85,7 @@ public class BookingServiceImpl implements BookingService {
 
     MessageSentEvent message = MessageSentEvent.builder()
         .messageType(MessageType.NEW_BOOKING)
-        .deliveryChannel(DeliveryChannel.SMS)
+        .deliveryChannel(DeliveryChannel.EMAIL)
         .userId(booking.getGuest().getPerson().getId())
         .messageData(messageData)
         .build();

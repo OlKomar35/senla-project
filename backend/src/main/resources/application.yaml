@@ -30,3 +30,5 @@ jwt:
     secret: R988574e26654231S54512148eR24517969633V25e524SENLA
     expired: 600000
 
+rest-template:
+  path: http://localhost:8888/templates
