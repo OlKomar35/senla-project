@@ -1,7 +1,11 @@
 package org.senla.komar.spring.service.impl;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +14,7 @@ import org.senla.komar.spring.dto.AuthPersonDto;
 import org.senla.komar.spring.dto.BookingDtoFullInfo;
 import org.senla.komar.spring.entity.Booking;
 import org.senla.komar.spring.enums.BookingStatus;
+import org.senla.komar.spring.enums.DeliveryChannel;
 import org.senla.komar.spring.enums.MessageType;
 import org.senla.komar.spring.event.MessageSentEvent;
 import org.senla.komar.spring.exception.EntityNotFoundException;
@@ -63,20 +68,26 @@ public class BookingServiceImpl implements BookingService {
     if (!auth.getName().equals(bookingDto.getGuest().getPerson().getLogin()) && roles.contains("ROLE_USER")) {
       throw new AuthException(HttpStatus.BAD_REQUEST, "Нельзя просмотреть чужие бронирования");
     }
+    Map<String , Object> messageData =  new HashMap<>();
+    messageData.put("hotelName", booking.getRoom().getHotel().getName());
+    messageData.put("guestSurname", booking.getGuest().getPerson().getSurname());
+    messageData.put("guestFirstname", booking.getGuest().getPerson().getFirstname());
+    messageData.put("bookingDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+    messageData.put("checkInDate", booking.getCheckInDate().toString());
+    messageData.put("checkOutDate", booking.getCheckOutDate().toString());
+    messageData.put("countGuests", booking.getCountGuests());
+    messageData.put("typePayment", booking.getTypePayment());
+    messageData.put("typeFood", booking.getTypeFood());
+    messageData.put("hotelPhoneNumber", booking.getRoom().getHotel().getPhoneNumber());
+    messageData.put("hotelEmail", booking.getRoom().getHotel().getEmail());
+    messageData.put("guestEmail", booking.getGuest().getPerson().getEmail());
+
+
     MessageSentEvent message = MessageSentEvent.builder()
-        .messageType(MessageType.EMAIL)
-        .bookingStatus(BookingStatus.NEW)
-        .guestSurname(booking.getGuest().getPerson().getSurname())
-        .guestFirstname(booking.getGuest().getPerson().getFirstname())
-        .guestEmail(booking.getGuest().getPerson().getEmail())
-        .hotelName("booking.getRoom().getHotel().getName()")
-        .hotelAddress("booking.getRoom().getHotel().getAddress().toString()")
-        .hotelPhoneNumber("booking.getRoom().getHotel().getPhoneNumber()")
-        .hotelEmail("booking.getRoom().getHotel().getEmail()")
-        .checkInDate(booking.getCheckInDate().toString())
-        .checkOutDate(booking.getCheckOutDate().toString())
-        .paymentStatus(booking.getPaymentStatus())
-        .typeFood(booking.getTypeFood())
+        .messageType(MessageType.NEW_BOOKING)
+        .deliveryChannel(DeliveryChannel.EMAIL)
+        .userId(booking.getGuest().getPerson().getId())
+        .messageData(messageData)
         .build();
     try {
       SendResult<String, MessageSentEvent> result = kafkaTemplate

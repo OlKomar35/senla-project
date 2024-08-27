@@ -2,10 +2,12 @@ package org.senla.komar.spring.config;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.senla.komar.spring.entity.Booking;
 import org.senla.komar.spring.event.MessageSentEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -22,27 +24,16 @@ import org.apache.kafka.clients.admin.NewTopic;
  * Created at 02.08.2024
  */
 @Configuration
+@RequiredArgsConstructor
 public class KafkaConfig {
 
-  final Environment environment;
-
-  public KafkaConfig(Environment environment) {
-    this.environment = environment;
-  }
-
-  public Map<String, Object> producerConfigs(){
-    Map<String, Object> configs = new HashMap<>();
-    configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,environment.getProperty("spring.kafka.producer.bootstrap-servers"));
-    configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,environment.getProperty("spring.kafka.producer.key-serializer"));
-    configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,environment.getProperty("spring.kafka.producer.value-serializer"));
-    configs.put(ProducerConfig.ACKS_CONFIG,environment.getProperty("spring.kafka.producer.acks"));
-
-    return configs;
-  }
+  private final KafkaProperties kafkaProperties;
 
   @Bean
   ProducerFactory<String, MessageSentEvent> producerFactory(){
-    return new DefaultKafkaProducerFactory<>(producerConfigs());
+    Map<String, Object> configs = kafkaProperties.buildProducerProperties(null);
+
+    return new DefaultKafkaProducerFactory<>(configs);
   }
 
   @Bean

@@ -227,6 +227,10 @@
         <sqlFile encoding="utf8" path="./sql/54.add-column-bookings-table.sql" relativeToChangelogFile="true" stripComments="true"/>
     </changeSet>
 
+    <changeSet id="homework-8-insert-room" author="Olga Komar">
+        <sqlFile encoding="utf8" path="./sql/57.insert-room.sql" relativeToChangelogFile="true" stripComments="true"/>
+    </changeSet>
+
     <changeSet id="homework-8-insert-booking" author="Olga Komar">
         <sqlFile encoding="utf8" path="./sql/55.insert-booking.sql" relativeToChangelogFile="true" stripComments="true"/>
     </changeSet>
